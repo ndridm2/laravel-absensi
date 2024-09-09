@@ -9,26 +9,26 @@ import { Transition } from "@headlessui/react";
 import Selectbox from "@/Components/Selectbox";
 import roles from "@/data/roles.json";
 
-export default function UserCreate({ auth }) {
-    const { data, setData, post, errors, processing, recentlySuccessful } =
+export default function UserEdit({ user, auth }) {
+    const { data, setData, patch, errors, processing, recentlySuccessful } =
         useForm({
-            name: "",
-            email: "",
+            name: user.name,
+            email: user.email,
             password: "",
             password_confirmation: "",
-            role: "user",
+            role: user.role,
         });
 
     const submit = (e) => {
         e.preventDefault();
 
-        post(route("users.store"), {
+        patch(route("users.update", user.id), {
             preserveScroll: true,
             onSuccess: () => {
-                alert("User created");
+                alert("User update");
             },
             onError: (errors) => {
-                alert("User not created");
+                alert("User not update");
             },
         });
     };
@@ -48,14 +48,15 @@ export default function UserCreate({ auth }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
+
                             <section className="max-w-xl">
                                 <header>
                                     <h2 className="text-lg font-medium text-gray-900">
-                                        Create User
+                                        Update User
                                     </h2>
 
                                     <p className="mt-1 text-sm text-gray-600">
-                                        Create a new user
+                                        Update a new data user
                                     </p>
                                 </header>
 
@@ -122,7 +123,7 @@ export default function UserCreate({ auth }) {
                                                 setData("role", e.target.value)
                                             }
                                             id="role"
-                                            value="user"
+                                            value={data.role}
                                             options={roles}
                                         ></Selectbox>
 
@@ -205,6 +206,7 @@ export default function UserCreate({ auth }) {
                                     </div>
                                 </form>
                             </section>
+
                         </div>
                     </div>
                 </div>
