@@ -8,78 +8,85 @@ import Selectbox from "@/Components/Selectbox";
 import { useState, useEffect } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 
-export default function SubmitAttendace() {
-    const loader = new Loader({
-        apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-        version: "weekly",
-        libraries: ["geocoder"],
-    });
+export default function Submit() {
+
+    // const loader = new Loader({
+    //     apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+    //     version: "weekly",
+    //     libraries: ["geocoder"],
+    // });
     const [transitioning, setTransitioning] = useState(false);
 
-    const {
-        data,
-        setData,
-        post,
-        transform,
-        errors,
-        processing,
-        recentlySuccessful,
-    } = useForm({
+    const { data, setData, post, transform, errors, processing } = useForm({
+        prepareData: {},
         status: "attend",
         description: "",
         latitude: "",
         longitude: "",
-        prepareData: {},
+        // address: "",
     });
 
-    const getLatLing = () => {
+    // const getLatLing = (e) => {
+    //     e.preventDefault();
+
+    //     navigator.geolocation.getCurrentPosition(
+    //         function (position) {
+    //             createGeocoder(position.coords);
+    //         },
+    //         function () {
+    //             alert("Tidak bisa mendapatkan lokasi");
+    //         }
+    //     );
+    // };
+
+    // function createGeocoder (coordinates) {
+    //     loader.load().then(() => {
+    //         const geocoder = new google.maps.Geocoder();
+
+    //         geocoder
+    //             .geocode({
+    //                 location: {
+    //                     lat: coordinates.latitude,
+    //                     lng: coordinates.longitude,
+    //                 },
+    //             })
+    //             .then((response) => {
+    //                 if (!response.results[0]) {
+    //                     alert("Tidak bisa mendapatkan lokasi");
+    //                     return;
+    //                 }
+
+    //                 // set prepare data
+    //                 let objLocation = {
+    //                     latitude: coordinates.latitude,
+    //                     longitude: coordinates.longitude,
+    //                     address: response.results[0].formatted_address,
+    //                 };
+    //                 setData("prepareData", objLocation);
+    //             });
+    //     });
+    // };
+
+    // set lat & long
+    const submit = (e) => {
         e.preventDefault();
 
         navigator.geolocation.getCurrentPosition(
             function (position) {
-                createGeocoder(position.coords);
+                console.log("Latitude is :", position.coords.latitude);
+                console.log("Longitude is :", position.coords.longitude);
+
+                let objLocation = {
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                };
+
+                setData("prepareData", objLocation);
             },
-            function (error) {
+            function () {
                 alert("Tidak bisa mendapatkan lokasi");
             }
         );
-    };
-
-    const createGeocoder = (coordinates) => {
-        loader.load().then(() => {
-            const geocoder = new google.maps.Geocoder();
-
-            geocoder.geocode({
-                location: {
-                    lat: coordinates.latitude,
-                    lng: coordinates.longitude,
-                },
-            })
-            .then((response) => {
-                console.log(response.result[0].formatted_address);
-            });
-        });
-    };
-
-    const submit = (e) => {
-        e.preventDefault();
-
-        // navigator.geolocation.getCurrentPosition(
-        //     function (position) {
-        //         console.log("Latitude is :", position.coords.latitude);
-        //         console.log("Longitude is :", position.coords.longitude);
-
-        //         let objLocation = {
-        //             latitude: position.coords.latitude,
-        //             longitude: position.coords.longitude,
-        //         };
-
-        //         setData("prepareData", objLocation);
-        //     },
-        //     function (error) {
-        //         alert("Tidak bisa mendapatkan lokasi");
-        //     }
-        // );
     };
 
     useEffect(() => {
@@ -114,7 +121,7 @@ export default function SubmitAttendace() {
     }, [data.status]);
 
     return (
-        <form onSubmit={getLatLing} className="mt-6 space-y-5">
+        <form onSubmit={submit} className="mt-6 space-y-5">
             <div>
                 <InputLabel htmlFor="info" value="Silahkan lakukan absensi" />
 

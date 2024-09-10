@@ -1,8 +1,11 @@
-import SubmitAttendace from '@/Components/attendace/Submit';
+import Attendace from '@/Components/attendace/Index';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
-export default function Dashboard({ auth }) {
+export default function Dashboard({ auth, submitted }) {
+
+    console.log(submitted);
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -19,7 +22,7 @@ export default function Dashboard({ auth }) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <section className='max-w-xl'>
                         <div className="p-6 text-gray-900">
-                            <SubmitAttendace/>
+                            <Attendace/>
                         </div>
                         </section>
                     </div>
