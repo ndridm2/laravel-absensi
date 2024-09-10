@@ -14,7 +14,7 @@ class AttendanceController extends Controller
 {
     static function isTodayAttendanceSubmitted(): bool
     {
-        return Attendance::where('user_id', Auth::user()->id)
+        return Attendance::where('user_id', auth()->id())
         ->whereDate('created_at', now()->toDateString())
         ->exists();
     }

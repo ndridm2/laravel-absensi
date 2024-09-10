@@ -10,10 +10,11 @@ import Selectbox from "@/Components/Selectbox";
 import roles from "@/data/roles.json";
 
 export default function UserEdit({ user, auth }) {
-    const { data, setData, patch, errors, processing, recentlySuccessful } =
+    const { data, setData, patch, errors, reset, processing, recentlySuccessful } =
         useForm({
             name: user.name,
             email: user.email,
+            uid: user.uid,
             password: "",
             password_confirmation: "",
             role: user.role,
@@ -32,6 +33,17 @@ export default function UserEdit({ user, auth }) {
             },
         });
     };
+
+    window.Echo.channel("read-rfid-channel").listen("ReadRfidEvent", (e) => {
+        if (e.code == "EXISTS") {
+            errors.uid = e.message;
+            reset('uid');
+        } else {
+            errors.uid = "";
+            reset("uid");
+            setData("uid", e.uid);
+        }
+    });
 
     return (
         <AuthenticatedLayout
@@ -109,6 +121,29 @@ export default function UserEdit({ user, auth }) {
                                         <InputError
                                             className="mt-2"
                                             message={errors.email}
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <InputLabel
+                                            htmlFor="uid"
+                                            value="Rfid"
+                                        />
+
+                                        <TextInput
+                                            id="uid"
+                                            className="mt-1 block w-full"
+                                            value={data.uid}
+                                            onChange={(e) =>
+                                                setData("uid", e.target.value)
+                                            }
+                                            required
+                                            autoComplete="uid"
+                                        />
+
+                                        <InputError
+                                            className="mt-2"
+                                            message={errors.uid}
                                         />
                                     </div>
 

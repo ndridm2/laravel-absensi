@@ -26,6 +26,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
     Route::get('/users/edit/{user}', [UserController::class, 'edit'])->name('users.edit');
     Route::patch('/users/update/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendances.index');
 });
 
 Route::middleware('auth')->group(function () {
@@ -33,7 +34,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendances.index');
     Route::post('/attendances/submit', [AttendanceController::class, 'submit'])->name('attendances.submit');
 });
 

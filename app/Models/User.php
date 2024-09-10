@@ -19,6 +19,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'uid',
         'password',
         'role',
     ];
@@ -45,9 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    // public function attendances()
-    // {
+    public function attendances()
+    {
             // akses table relasi
-    //     return $this->hasMany(Attendance::class);
-    // }
+        return $this->hasMany(Attendance::class);
+    }
 }

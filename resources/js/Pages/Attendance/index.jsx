@@ -1,6 +1,5 @@
 import Pagination from "@/Components/Pagination";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Link } from "@inertiajs/react";
 import { Head } from "@inertiajs/react";
 
 export default function AttendanceIndex({ auth, attendances }) {

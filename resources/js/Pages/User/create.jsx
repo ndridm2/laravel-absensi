@@ -10,10 +10,11 @@ import Selectbox from "@/Components/Selectbox";
 import roles from "@/data/roles.json";
 
 export default function UserCreate({ auth }) {
-    const { data, setData, post, errors, processing, recentlySuccessful } =
+    const { data, setData, post, errors, reset, processing, recentlySuccessful } =
         useForm({
             name: "",
             email: "",
+            uid: "",
             password: "",
             password_confirmation: "",
             role: "user",
@@ -27,11 +28,22 @@ export default function UserCreate({ auth }) {
             onSuccess: () => {
                 alert("User created");
             },
-            onError: (errors) => {
+            onError: () => {
                 alert("User not created");
             },
         });
     };
+
+    window.Echo.channel("read-rfid-channel").listen("ReadRfidEvent", (e) => {
+        if (e.code == "EXISTS") {
+            errors.uid = e.message;
+            reset('uid');
+        } else {
+            errors.uid = "";
+            reset("uid");
+            setData("uid", e.uid);
+        }
+    });
 
     return (
         <AuthenticatedLayout
@@ -102,12 +114,34 @@ export default function UserCreate({ auth }) {
                                                 setData("email", e.target.value)
                                             }
                                             required
-                                            autoComplete="username"
+                                            autoComplete="email"
                                         />
 
                                         <InputError
                                             className="mt-2"
                                             message={errors.email}
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <InputLabel
+                                            htmlFor="uid"
+                                            value="Rfid"
+                                        />
+
+                                        <TextInput
+                                            id="uid"
+                                            className="mt-1 block w-full"
+                                            value={data.uid}
+                                            onChange={(e) =>
+                                                setData("uid", e.target.value)
+                                            }
+                                            required
+                                        />
+
+                                        <InputError
+                                            className="mt-2"
+                                            message={errors.uid}
                                         />
                                     </div>
 
