@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use App\Events\ReadRfidEvent;
+use App\Events\AttendEvent;
+use App\Models\Attendance;
 
 class RfidController extends Controller
 {
@@ -30,6 +32,39 @@ class RfidController extends Controller
                 'code'=> 'SUCCESS',
                 'UID' => $request->uid
             ]);
+        }
+    }
+
+    public function attend(Request $request)
+    {
+        $request->validate([
+            "uid" => "required",
+        ]);
+
+        if ($user = User::where('uid', $request->uid)->first()) {
+            Attendance::create([
+                'user_id' => $user->id,
+                'status' => "attend",
+                'description' => "rfid",
+                'latitude' => "",
+                'longitude' => "",
+                'address' => "",
+            ]);
+
+            // tampilkan user yg absen
+            event(new AttendEvent($user->name));
+
+            return response()->json([
+                'message' => 'RFID submited succesfully',
+                'code' => 'SUCCESS',
+                'uid' => $request->uid
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'RFID not found',
+                'code' => 'NOT_FOUND',
+                'uid' => $request->uid
+            ], 404);
         }
     }
 }

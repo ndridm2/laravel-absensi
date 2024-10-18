@@ -8,4 +8,5 @@ use App\Http\Controllers\RfidController;
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
-route::get('/rfid/reads', [RfidController::class, 'read'])->name('users.read');
+route::get('/rfid/reads', [RfidController::class, 'read'])->name('rfid.read');
+route::get('/rfid/attend', [RfidController::class, 'attend'])->name('rfid.attend');

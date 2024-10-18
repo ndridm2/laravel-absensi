@@ -4,10 +4,24 @@ import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
+import axios from "axios";
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
+
+    const logout = (e) => {
+        e.preventDefault();
+
+        window.Echo.leave("attend-channel");
+
+        axios.post("/logout")
+        .then(() => {
+            window.location.href = "/";
+        }).catch((error) => {
+            window.location.href = "/";
+        });
+    };
 
     const menu = (role) => {
         if (role === "admin") {
@@ -96,7 +110,7 @@ export default function Authenticated({ user, header, children }) {
                                             Profile
                                         </Dropdown.Link>
                                         <Dropdown.Link
-                                            href={route("logout")}
+                                            onClick={(e) => logout(e)}
                                             method="post"
                                             as="button"
                                         >
@@ -186,7 +200,7 @@ export default function Authenticated({ user, header, children }) {
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 method="post"
-                                href={route("logout")}
+                                onClick={(e) => logout(e)}
                                 as="button"
                             >
                                 Log Out

@@ -44,6 +44,6 @@ class AttendanceController extends Controller
             'address' => "Jakarta raya",
         ]);
 
-        // return redirect::route('users');
+        return redirect::route('dashboard');
     }
 }
