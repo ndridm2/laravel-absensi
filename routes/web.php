@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendances.index');
     Route::post('/attendances/submit', [AttendanceController::class, 'submit'])->name('attendances.submit');
+    Route::get('/attendaces/face-recognition', [AttendanceController::class, 'faceRecognition'])->name('attendances.faceRecognition');
 });
 
 require __DIR__ . '/auth.php';

@@ -7,6 +7,7 @@ import { Transition } from "@headlessui/react";
 import Selectbox from "@/Components/Selectbox";
 import { useState, useEffect } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
+import ButtonRunPython from "@/Components/ButtonRunPython";
 
 export default function Submit() {
     // const loader = new Loader({
@@ -166,6 +167,14 @@ export default function Submit() {
 
             <div className="flex items-center gap-4">
                 <PrimaryButton disabled={processing}>Absensi</PrimaryButton>
+
+                <ButtonRunPython
+                    className="bg-green-500 hover:bg-green-400 focus:bg-green-300 active:bg-green-300"
+                    label="Facial Recognition"
+                    routerUrl="attendances.faceRecognition"
+                    messageSuccess="Facial recognition success"
+                    messageFailed="Facial recognition failed"
+                />
 
                 {/* <Transition
                     show={recentlySuccessful}

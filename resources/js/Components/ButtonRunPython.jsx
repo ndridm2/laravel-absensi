@@ -38,8 +38,8 @@ export default function ButtonRunPython({
             onClick={runFunction}
             className={className}
             style={{
-                minWidth: "200px",
-                height: "45px",
+                minWidth: "130px",
+                height: "36px",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
