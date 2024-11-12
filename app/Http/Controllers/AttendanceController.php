@@ -15,10 +15,10 @@ class AttendanceController extends Controller
     static function isTodayAttendanceSubmitted(): bool
     {
         return Attendance::where('user_id', auth()->id())
-        ->whereDate('created_at', now()->toDateString())
-        ->exists();
+            ->whereDate('created_at', now()->toDateString())
+            ->exists();
     }
-    public function index():Response
+    public function index(): Response
     {
         $attendances = Attendance::with('user')->paginate(10);
 
@@ -30,6 +30,7 @@ class AttendanceController extends Controller
     {
         $request->validate([
             "status" => "required",
+            "mode" => 'required',
             "description" => "required_if:status,sick,leave,permit,business_trip,remote|max:500",
             "latitude" => "required",
             "longitude" => "required",
@@ -38,10 +39,11 @@ class AttendanceController extends Controller
         Attendance::create([
             'user_id' => auth()->id(),
             'status' => $request->status,
+            'mode' => $request->mode,
             'description' => $request->description,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
-            'address' => "Jakarta raya",
+            'address' => "Indonesia",
         ]);
 
         return redirect::route('dashboard');

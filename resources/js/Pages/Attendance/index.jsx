@@ -29,42 +29,61 @@ export default function AttendanceIndex({ auth, attendances }) {
                                         <th className="px-6 py-3 text-left text-lg font-medium text-black">
                                             Tanggal
                                         </th>
-                                        <th className="px-6 py-3 text-left text-lg font-medium text-black">
-                                            Name
+                                        <th className="px-10 py-3 text-left text-lg font-medium text-black">
+                                            Nama
                                         </th>
-                                        <th className="px-6 py-3 text-left text-lg font-medium text-black">
+                                        <th className="px-10 py-3 text-left text-lg font-medium text-black">
                                             Status
                                         </th>
-                                        <th className="px-6 py-3 text-left text-lg font-medium text-black w-1/2">
+                                        <th className="px-10 py-3 text-left text-lg font-medium text-black">
+                                            Mode
+                                        </th>
+                                        <th className="px-10 py-3 text-left text-lg font-medium text-black">
+                                            Deskripsi
+                                        </th>
+                                        <th className="px-10 py-3 text-left text-lg font-medium text-black w-1/2">
                                             Alamat
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {attendances.data.map(({id, user, created_at, address, status}) => {
-                                        return (
-                                            <tr
-                                                key={id}
-                                                className="border-b odd:bg-white even:bg-slate-200"
-                                            >
-                                                <td className="px-6 py-4">
-                                                    {created_at}
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    {user.name}
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    {status}
-                                                </td>
-                                                <td
-                                                    cla
-                                                    ssName="px-6 py-4"
+                                    {attendances.data.map(
+                                        ({
+                                            id,
+                                            user,
+                                            created_at,
+                                            address,
+                                            status,
+                                            mode,
+                                            description,
+                                        }) => {
+                                            return (
+                                                <tr
+                                                    key={id}
+                                                    className="border-b odd:bg-white even:bg-slate-200"
                                                 >
-                                                    {address}
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
+                                                    <td className="px-10 py-4">
+                                                        {created_at}
+                                                    </td>
+                                                    <td className="px-10 py-4">
+                                                        {user.name}
+                                                    </td>
+                                                    <td className="px-10 py-4">
+                                                        {status}
+                                                    </td>
+                                                    <td className="px-10 py-4">
+                                                        {mode}
+                                                    </td>
+                                                    <td className="px-10 py-4">
+                                                        {description}
+                                                    </td>
+                                                    <td className="px-10 py-4">
+                                                        {address}
+                                                    </td>
+                                                </tr>
+                                            );
+                                        }
+                                    )}
                                 </tbody>
                             </table>
                             <Pagination links={attendances.links} />

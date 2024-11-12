@@ -1,0 +1,30 @@
+/* Styling untuk spinner */
+.spinner {
+    animation: spin 1s linear infinite, colorChange 2s ease-in-out infinite;
+    margin-left: 10px; /* Jarak antara spinner dan teks label */
+    vertical-align: middle; /* Agar spinner sejajar dengan teks */
+    font-size: 28px; /* Ukuran spinner */
+}
+
+/* Animasi spinner berputar */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Animasi untuk perubahan warna dari merah ke hijau */
+@keyframes colorChange {
+    0% {
+        color: blue;
+    } /* Warna pertama (merah) */
+    50% {
+        color: green;
+    } /* Warna kedua (hijau) */
+    100% {
+        color: violet;
+    } /* Kembali ke merah */
+}

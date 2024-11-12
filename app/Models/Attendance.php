@@ -23,6 +23,7 @@ class Attendance extends Model
         'address',
         'status',
         'description',
+        'mode',
     ];
 
     public function newUniqueId()

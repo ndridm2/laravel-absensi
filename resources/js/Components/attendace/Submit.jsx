@@ -9,7 +9,6 @@ import { useState, useEffect } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 
 export default function Submit() {
-
     // const loader = new Loader({
     //     apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
     //     version: "weekly",
@@ -20,6 +19,7 @@ export default function Submit() {
     const { data, setData, post, transform, errors, processing } = useForm({
         prepareData: {},
         status: "attend",
+        mode: "Website",
         description: "",
         latitude: "",
         longitude: "",
@@ -34,7 +34,7 @@ export default function Submit() {
     //             createGeocoder(position.coords);
     //         },
     //         function () {
-    //             alert("Tidak bisa mendapatkan lokasi");
+    //             alert("Tidak bisa mendapatkan lokasi..!");
     //         }
     //     );
     // };
@@ -52,7 +52,7 @@ export default function Submit() {
     //             })
     //             .then((response) => {
     //                 if (!response.results[0]) {
-    //                     alert("Tidak bisa mendapatkan lokasi");
+    //                     alert("Tidak bisa mendapatkan lokasi..!");
     //                     return;
     //                 }
 
@@ -84,7 +84,7 @@ export default function Submit() {
                 setData("prepareData", objLocation);
             },
             function () {
-                alert("Tidak bisa mendapatkan lokasi");
+                alert("Tidak bisa mendapatkan lokasi..!");
             }
         );
     };
@@ -97,13 +97,14 @@ export default function Submit() {
             transform((data) => ({
                 ...data.prepareData,
                 status: data.status,
+                mode: data.mode,
                 description: data.description,
             }));
 
             post(route("attendances.submit"), {
                 preserveScroll: true,
                 onSuccess: () => {
-                    alert("Success Absensi");
+                    alert("Absensi berhasil");
                 },
                 onError: (errors) => {
                     console.log(errors);
