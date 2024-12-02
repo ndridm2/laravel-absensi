@@ -29,7 +29,7 @@ class RfidController extends Controller
 
             return response()->json([
                 'message' => 'RFID read successfully',
-                'code'=> 'SUCCESS',
+                'code' => 'SUCCESS',
                 'UID' => $request->uid
             ]);
         }
@@ -45,7 +45,8 @@ class RfidController extends Controller
             Attendance::create([
                 'user_id' => $user->id,
                 'status' => "attend",
-                'description' => "rfid",
+                'description' => "",
+                'mode' => "rfid",
                 'latitude' => "",
                 'longitude' => "",
                 'address' => "",
